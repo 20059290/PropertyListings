@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">PropertyListings</string>
+    <string name="button_addProperty">Add Property</string>
+    <string name="hint_propertyAddress">Property Address</string>
+    <string name="hint_propertyDescription">Property Description</string>
 </resources>
