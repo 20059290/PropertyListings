@@ -9,7 +9,7 @@ import ie.wit.propertylistings.models.PropertyModel
 import timber.log.Timber
 import timber.log.Timber.i
 
-class MainActivity : AppCompatActivity() {
+class PropertyActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPropertyBinding
     var property = PropertyModel()
     lateinit var app: MainApp
@@ -29,9 +29,12 @@ class MainActivity : AppCompatActivity() {
             if (property.address.isNotEmpty() && property.description.isNotEmpty()) {
                 i("add Button Pressed: $property.title")
                 app.properties.add(property.copy())
+                i("add Button Pressed: ${property}")
                 for (i in app.properties.indices){
                     i("Properties - [$i]:${this.app.properties[i]}")
                 }
+                setResult(RESULT_OK)
+                finish()
             }
             else {
                 Snackbar

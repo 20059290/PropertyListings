@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.MainActivity">
+            android:name=".activities.PropertyActivity">
         </activity>
     </application>
 
