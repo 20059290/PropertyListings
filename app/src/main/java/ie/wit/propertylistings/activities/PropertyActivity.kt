@@ -49,14 +49,17 @@ class PropertyActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
+        menuInflater.inflate(R.menu.menu_property, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.cancel_add -> { finish() }
+            R.id.cancel_add -> {
+                finish()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
+
 }
