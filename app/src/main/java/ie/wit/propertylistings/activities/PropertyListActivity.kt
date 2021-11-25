@@ -62,8 +62,8 @@ class PropertyAdapter constructor(private var properties: List<PropertyModel>) :
     }
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
-        val placemark = properties[holder.adapterPosition]
-        holder.bind(placemark)
+        val property = properties[holder.adapterPosition]
+        holder.bind(property)
     }
 
     override fun getItemCount(): Int = properties.size
