@@ -4,23 +4,22 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import ie.wit.propertylistings.databinding.ActivityPropertyBinding
+import ie.wit.propertylistings.main.MainApp
 import ie.wit.propertylistings.models.PropertyModel
 import timber.log.Timber
 import timber.log.Timber.i
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityPropertyBinding
     var property = PropertyModel()
-    val properties = ArrayList<PropertyModel>()
+    lateinit var app: MainApp
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityPropertyBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        Timber.plant(Timber.DebugTree())
+        app = application as MainApp
         i("Property Activity started...")
 
 
@@ -29,9 +28,9 @@ class MainActivity : AppCompatActivity() {
             property.description = binding.propertyDescription.text.toString()
             if (property.address.isNotEmpty() && property.description.isNotEmpty()) {
                 i("add Button Pressed: $property.title")
-                properties.add(property.copy())
-                for (i in properties.indices){
-                    i("Properties - [$i]:${this.properties[i]}")
+                app.properties.add(property.copy())
+                for (i in app.properties.indices){
+                    i("Properties - [$i]:${this.app.properties[i]}")
                 }
             }
             else {
