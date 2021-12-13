@@ -1,13 +1,19 @@
 package ie.wit.propertylistings.activities
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Picasso
 import ie.wit.propertylistings.R
+import ie.wit.propertylistings.adapters.PropertyListener
 import ie.wit.propertylistings.databinding.ActivityPropertyBinding
+import ie.wit.propertylistings.helpers.showImagePicker
 import ie.wit.propertylistings.main.MainApp
 import ie.wit.propertylistings.models.PropertyModel
 import timber.log.Timber
@@ -17,6 +23,8 @@ class PropertyActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPropertyBinding
     var property = PropertyModel()
     lateinit var app: MainApp
+    private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +42,12 @@ class PropertyActivity : AppCompatActivity() {
             binding.propertyAddress.setText(property.address)
             binding.propertyDescription.setText(property.description)
             binding.btnAdd.setText(R.string.save_property)
+            Picasso.get()
+                .load(property.image)
+                .into(binding.propertyImage)
+            if (property.image != Uri.EMPTY) {
+                binding.chooseImage.setText(R.string.change_property_image)
+            }
         }
 
         binding.btnAdd.setOnClickListener() {
@@ -52,9 +66,14 @@ class PropertyActivity : AppCompatActivity() {
                     app.properties.create(property.copy())
                 }
             }
+            i("add Button Pressed: $property")
             setResult(RESULT_OK)
             finish()
         }
+        binding.chooseImage.setOnClickListener {
+            showImagePicker(imageIntentLauncher)
+        }
+        registerImagePickerCallback()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -71,4 +90,23 @@ class PropertyActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    private fun registerImagePickerCallback() {
+        imageIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when(result.resultCode){
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            i("Got Result ${result.data!!.data}")
+                            property.image = result.data!!.data!!
+                            Picasso.get()
+                                .load(property.image)
+                                .into(binding.propertyImage)
+                            binding.chooseImage.setText(R.string.change_property_image)
+                        } // end of if
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
+    }
 }

@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import ie.wit.propertylistings.R
 import ie.wit.propertylistings.databinding.CardPropertyBinding
 import ie.wit.propertylistings.models.PropertyModel
@@ -36,6 +37,7 @@ class PropertyAdapter constructor(private var properties: List<PropertyModel>,
         fun bind(property: PropertyModel, listener: PropertyListener) {
             binding.propertyAddress.text = property.address
             binding.description.text = property.description
+            Picasso.get().load(property.image).resize(200,200).into(binding.imageIcon)
             binding.root.setOnClickListener { listener.onPropertyClick(property) }
         }
     }

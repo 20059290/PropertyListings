@@ -27,6 +27,7 @@ class PropertyMemStore : PropertyStore {
         if (foundProperty != null) {
             foundProperty.address = property.address
             foundProperty.description = property.description
+            foundProperty.image = property.image
             logAll()
         }
     }
