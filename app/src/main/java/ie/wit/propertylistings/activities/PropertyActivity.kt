@@ -20,6 +20,7 @@ class PropertyActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        var edit = false
         binding = ActivityPropertyBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.toolbarAdd.title = title
@@ -27,22 +28,32 @@ class PropertyActivity : AppCompatActivity() {
         app = application as MainApp
         i("Property Activity started...")
 
+        if (intent.hasExtra("property_edit")) {
+            edit = true
+            property = intent.extras?.getParcelable("property_edit")!!
+            binding.propertyAddress.setText(property.address)
+            binding.propertyDescription.setText(property.description)
+            binding.btnAdd.setText(R.string.save_property)
+        }
 
         binding.btnAdd.setOnClickListener() {
             property.address = binding.propertyAddress.text.toString()
             property.description = binding.propertyDescription.text.toString()
-            if (property.address.isNotEmpty() && property.description.isNotEmpty()) {
-                i("add Button Pressed: $property.title")
-//                app.properties.add(property.copy())
-                app.properties.create(property.copy())
-                setResult(RESULT_OK)
-                finish()
-            }
-            else {
+            if (property.address.isEmpty() && property.description.isEmpty()) {
                 Snackbar
-                    .make(it,"Please ensure there are no empty fields", Snackbar.LENGTH_LONG)
+                    .make(it,R.string.enter_fields, Snackbar.LENGTH_LONG)
                     .show()
             }
+            else {
+                if (edit){
+                    app.properties.update(property.copy())
+                }
+                else {
+                    app.properties.create(property.copy())
+                }
+            }
+            setResult(RESULT_OK)
+            finish()
         }
     }
 

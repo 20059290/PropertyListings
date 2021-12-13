@@ -2,6 +2,12 @@ package ie.wit.propertylistings.models
 
 import timber.log.Timber.i
 
+var lastId = 0L
+
+internal fun getId(): Long {
+    return lastId++
+}
+
 class PropertyMemStore : PropertyStore {
 
     val properties = ArrayList<PropertyModel>()
@@ -11,8 +17,18 @@ class PropertyMemStore : PropertyStore {
     }
 
     override fun create(property: PropertyModel) {
+        property.id = getId()
         properties.add(property)
         logAll()
+    }
+
+    override fun update(property: PropertyModel) {
+        var foundProperty: PropertyModel? = properties.find { p -> p.id == property.id }
+        if (foundProperty != null) {
+            foundProperty.address = property.address
+            foundProperty.description = property.description
+            logAll()
+        }
     }
 
     fun logAll() {

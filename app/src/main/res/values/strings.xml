@@ -5,4 +5,6 @@
     <string name="hint_propertyDescription">Property Description</string>
     <string name="menu_addProperty">Add</string>
     <string name="menu_cancel">Cancel</string>
+    <string name="enter_fields"> Please ensure there are no empty fields</string>
+    <string name="save_property"> Save Property </string>
 </resources>
