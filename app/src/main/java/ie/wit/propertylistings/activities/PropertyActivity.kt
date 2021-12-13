@@ -22,7 +22,8 @@ class PropertyActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPropertyBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        binding.toolbarAdd.title = title
+//        setSupportActionBar(binding.toolbarAdd)
         app = application as MainApp
         i("Property Activity started...")
 
@@ -32,11 +33,8 @@ class PropertyActivity : AppCompatActivity() {
             property.description = binding.propertyDescription.text.toString()
             if (property.address.isNotEmpty() && property.description.isNotEmpty()) {
                 i("add Button Pressed: $property.title")
-                app.properties.add(property.copy())
-                i("add Button Pressed: ${property}")
-                for (i in app.properties.indices){
-                    i("Properties - [$i]:${this.app.properties[i]}")
-                }
+//                app.properties.add(property.copy())
+                app.properties.create(property.copy())
                 setResult(RESULT_OK)
                 finish()
             }

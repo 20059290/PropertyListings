@@ -9,19 +9,23 @@ import ie.wit.propertylistings.R
 import ie.wit.propertylistings.databinding.CardPropertyBinding
 import ie.wit.propertylistings.models.PropertyModel
 
-class PropertyAdapter constructor(private var properties: List<PropertyModel>) :
+interface PropertyListener {
+    fun onPropertyClick(property: PropertyModel)
+}
+
+class PropertyAdapter constructor(private var properties: List<PropertyModel>,
+                                  private val listener: PropertyListener) :
     RecyclerView.Adapter<PropertyAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
         val binding = CardPropertyBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
-
         return MainHolder(binding)
     }
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
         val property = properties[holder.adapterPosition]
-        holder.bind(property)
+        holder.bind(property, listener)
     }
 
     override fun getItemCount(): Int = properties.size
@@ -29,9 +33,10 @@ class PropertyAdapter constructor(private var properties: List<PropertyModel>) :
     class MainHolder(private val binding : CardPropertyBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(property: PropertyModel) {
+        fun bind(property: PropertyModel, listener: PropertyListener) {
             binding.propertyAddress.text = property.address
             binding.description.text = property.description
+            binding.root.setOnClickListener { listener.onPropertyClick(property) }
         }
     }
 }
