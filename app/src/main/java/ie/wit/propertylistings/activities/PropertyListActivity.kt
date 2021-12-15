@@ -50,6 +50,10 @@ class PropertyListActivity : AppCompatActivity(), PropertyListener {
                 val launcherIntent = Intent(this, PropertyActivity::class.java)
                 refreshIntentLauncher.launch(launcherIntent)
             }
+            R.id.delete_all -> {
+                app.properties.deleteAll()
+                loadProperties()
+            }
         }
         return super.onOptionsItemSelected(item)
     }

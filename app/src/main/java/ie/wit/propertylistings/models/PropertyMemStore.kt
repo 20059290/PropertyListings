@@ -35,6 +35,10 @@ class PropertyMemStore : PropertyStore {
         }
     }
 
+    override fun deleteAll() {
+        properties.clear()
+    }
+
     override fun delete(property: PropertyModel) {
         properties.remove(property)
     }

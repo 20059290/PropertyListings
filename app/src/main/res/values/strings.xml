@@ -6,6 +6,7 @@
     <string name="menu_addProperty">Add</string>
     <string name="menu_cancel">Cancel</string>
     <string name="menu_delete">Delete</string>
+    <string name="menu_deleteAll">Delete All</string>
     <string name="enter_fields"> Please ensure there are no empty fields</string>
     <string name="save_property"> Save Property </string>
     <string name="button_addImage"> Add Image </string>

@@ -73,6 +73,10 @@ class PropertyJSONStore(private val context: Context) : PropertyStore {
         properties.remove(property)
         serialize()
     }
+
+    override fun deleteAll() {
+        properties.clear()
+    }
 }
 
 class UriParser : JsonDeserializer<Uri>,JsonSerializer<Uri> {
