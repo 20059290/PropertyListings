@@ -16,8 +16,5 @@ class MainApp : Application() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
         i("Property Listings started")
-//        properties.add(PropertyModel("Aras an Uachtaran", "Pheonix Park"))
-//        properties.add(PropertyModel("White House", "London"))
-//        properties.add(PropertyModel("Buckingham Palace", "Washington D.C"))
     }
 }

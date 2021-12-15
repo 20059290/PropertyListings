@@ -24,6 +24,7 @@ class PropertyActivity : AppCompatActivity() {
     var property = PropertyModel()
     lateinit var app: MainApp
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +33,7 @@ class PropertyActivity : AppCompatActivity() {
         binding = ActivityPropertyBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.toolbarAdd.title = title
-//        setSupportActionBar(binding.toolbarAdd)
+//        setSupportActionBar(binding.toolbarAdd)      #This is disabled for testing purposes... Will be enabled in the final edit
         app = application as MainApp
         i("Property Activity started...")
 
@@ -74,6 +75,12 @@ class PropertyActivity : AppCompatActivity() {
             showImagePicker(imageIntentLauncher)
         }
         registerImagePickerCallback()
+
+        binding.propertyLocation.setOnClickListener {
+            i ("Set Location Pressed")
+            val launcherIntent = Intent(this, MapActivity::class.java)
+            mapIntentLauncher.launch(launcherIntent)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -108,5 +115,11 @@ class PropertyActivity : AppCompatActivity() {
                     RESULT_CANCELED -> { } else -> { }
                 }
             }
+    }
+
+    private fun registerMapCallback() {
+        mapIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { i("Map Loaded") }
     }
 }

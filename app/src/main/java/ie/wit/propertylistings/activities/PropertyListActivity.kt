@@ -27,7 +27,7 @@ class PropertyListActivity : AppCompatActivity(), PropertyListener {
         binding = ActivityPropertyListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.toolbar.title = title
-//        setSupportActionBar(binding.toolbar)
+//        setSupportActionBar(binding.toolbar) #This is disabled for testing purposes... Will be enabled in the final edit
 
         app = application as MainApp
 
