@@ -103,9 +103,16 @@ class PropertyActivity : AppCompatActivity() {
             R.id.cancel_add -> {
                 finish()
             }
+            R.id.delete_prop -> {
+                    app.properties.delete(property)
+                    finish()
+                }
         }
         return super.onOptionsItemSelected(item)
     }
+
+
+
 
     private fun registerImagePickerCallback() {
         imageIntentLauncher =

@@ -35,6 +35,10 @@ class PropertyMemStore : PropertyStore {
         }
     }
 
+    override fun delete(property: PropertyModel) {
+        properties.remove(property)
+    }
+
     fun logAll() {
         properties.forEach{ i("${it}") }
     }

@@ -34,6 +34,7 @@ class PropertyListActivity : AppCompatActivity(), PropertyListener {
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = PropertyAdapter(app.properties.findAll(),this)
+        loadProperties()
 
         registerRefreshCallback()
     }
@@ -67,6 +68,15 @@ class PropertyListActivity : AppCompatActivity(), PropertyListener {
     private fun registerRefreshCallback() {
         refreshIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-            { binding.recyclerView.adapter?.notifyDataSetChanged() }
+            { loadProperties() }
+    }
+
+    private fun loadProperties() {
+        showProperties(app.properties.findAll())
+    }
+
+    fun showProperties (properties: List<PropertyModel>) {
+        binding.recyclerView.adapter = PropertyAdapter(properties, this)
+        binding.recyclerView.adapter?.notifyDataSetChanged()
     }
 }
