@@ -28,6 +28,9 @@ class PropertyMemStore : PropertyStore {
             foundProperty.address = property.address
             foundProperty.description = property.description
             foundProperty.image = property.image
+            foundProperty.lat = property.lat
+            foundProperty.lng = property.lng
+            foundProperty.zoom = property.zoom
             logAll()
         }
     }

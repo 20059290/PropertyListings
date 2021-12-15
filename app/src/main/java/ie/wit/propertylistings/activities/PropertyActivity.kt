@@ -15,6 +15,7 @@ import ie.wit.propertylistings.adapters.PropertyListener
 import ie.wit.propertylistings.databinding.ActivityPropertyBinding
 import ie.wit.propertylistings.helpers.showImagePicker
 import ie.wit.propertylistings.main.MainApp
+import ie.wit.propertylistings.models.Location
 import ie.wit.propertylistings.models.PropertyModel
 import timber.log.Timber
 import timber.log.Timber.i
@@ -25,6 +26,7 @@ class PropertyActivity : AppCompatActivity() {
     lateinit var app: MainApp
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
+//    var location = Location(52.245696, -7.139102, 15f)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,9 +80,17 @@ class PropertyActivity : AppCompatActivity() {
 
         binding.propertyLocation.setOnClickListener {
             i ("Set Location Pressed")
+            val location = Location(52.245696, -7.139102, 15f)
+            if (property.zoom != 0f) {
+                location.lat =  property.lat
+                location.lng = property.lng
+                location.zoom = property.zoom
+            }
             val launcherIntent = Intent(this, MapActivity::class.java)
+                .putExtra("location", location)
             mapIntentLauncher.launch(launcherIntent)
         }
+        registerMapCallback()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -120,6 +130,20 @@ class PropertyActivity : AppCompatActivity() {
     private fun registerMapCallback() {
         mapIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-            { i("Map Loaded") }
+            { result ->
+                when (result.resultCode) {
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            i("Got Location ${result.data.toString()}")
+                            val location = result.data!!.extras?.getParcelable<Location>("location")!!
+                            i("Location == $location")
+                            property.lat = location.lat
+                            property.lng = location.lng
+                            property.zoom = location.zoom
+                        } // end of if
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
     }
 }

@@ -34,7 +34,6 @@
 
         <activity
             android:name=".activities.MapActivity"
-            android:exported="false"
             android:label="@string/title_activity_map" />
         <activity
             android:name=".activities.PropertyListActivity"
