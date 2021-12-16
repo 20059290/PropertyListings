@@ -2,16 +2,22 @@
     <string name="app_name">PropertyListings</string>
     <string name="button_addProperty">Add Property</string>
     <string name="hint_propertyAddress">Property Address</string>
+    <string name="hint_propertyBathrooms">No. Bathrooms</string>
+    <string name="hint_propertyBedrooms">No. Bedrooms</string>
+    <string name="hint_propertyPrice">Price</string>
     <string name="hint_propertyDescription">Property Description</string>
     <string name="menu_addProperty">Add</string>
     <string name="menu_cancel">Cancel</string>
     <string name="menu_delete">Delete</string>
     <string name="menu_deleteAll">Delete All</string>
-    <string name="enter_fields"> Please ensure there are no empty fields</string>
+    <string name="enter_fields">Address, Bedrooms, Bathrooms and Price must each have a value</string>
     <string name="save_property"> Save Property </string>
     <string name="button_addImage"> Add Image </string>
     <string name="select_property_image">Select property image</string>
     <string name="change_property_image">Change property image</string>
     <string name="button_location">Set Location</string>
     <string name="title_activity_map">MapActivity</string>
+    <string name="numbathrooms">Number of \nBathrooms</string>
+    <string name="numbbedrooms">Number of \nBedrooms</string>
+    <string name="Price">€ \nPrice</string>
 </resources>

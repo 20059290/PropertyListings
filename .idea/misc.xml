@@ -6,11 +6,11 @@
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.10677083333333333" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.140625" />
         <entry key="app/src/main/res/layout/activity_map.xml" value="6.244942691034841" />
-        <entry key="app/src/main/res/layout/activity_property.xml" value="0.15054727995579756" />
+        <entry key="app/src/main/res/layout/activity_property.xml" value="0.4153498871331828" />
         <entry key="app/src/main/res/layout/activity_property_list.xml" value="0.8175411116151122" />
         <entry key="app/src/main/res/layout/card_property.xml" value="0.33414634146341465" />
         <entry key="app/src/main/res/menu/menu_main.xml" value="1.9642023951436614" />
-        <entry key="app/src/main/res/menu/menu_property.xml" value="0.6692913385826772" />
+        <entry key="app/src/main/res/menu/menu_property.xml" value="0.33" />
       </map>
     </option>
   </component>

@@ -19,6 +19,10 @@ import ie.wit.propertylistings.models.Location
 import ie.wit.propertylistings.models.PropertyModel
 import timber.log.Timber
 import timber.log.Timber.i
+import android.view.View
+import android.widget.NumberPicker
+import androidx.core.view.get
+
 
 class PropertyActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPropertyBinding
@@ -35,6 +39,7 @@ class PropertyActivity : AppCompatActivity() {
         binding = ActivityPropertyBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.toolbarAdd.title = title
+        setupNumberPickers()
 //        setSupportActionBar(binding.toolbarAdd)      #This is disabled for testing purposes... Will be enabled in the final edit
         app = application as MainApp
         i("Property Activity started...")
@@ -43,6 +48,9 @@ class PropertyActivity : AppCompatActivity() {
             edit = true
             property = intent.extras?.getParcelable("property_edit")!!
             binding.propertyAddress.setText(property.address)
+            binding.propertyBedrooms.value = property.bedrooms
+            binding.propertyBathrooms.value = property.bathrooms
+            binding.propertyPrice.value = property.price
             binding.propertyDescription.setText(property.description)
             binding.btnAdd.setText(R.string.save_property)
             Picasso.get()
@@ -53,10 +61,14 @@ class PropertyActivity : AppCompatActivity() {
             }
         }
 
-        binding.btnAdd.setOnClickListener() {
+        binding.btnAdd.setOnClickListener {
             property.address = binding.propertyAddress.text.toString()
             property.description = binding.propertyDescription.text.toString()
-            if (property.address.isEmpty() && property.description.isEmpty()) {
+            property.bedrooms = binding.propertyBedrooms.value
+            property.bathrooms = binding.propertyBathrooms.value
+            property.price = binding.propertyPrice.value
+            i("add Button Pressed: $property")
+            if (property.address.isEmpty() || property.bedrooms == 0 || property.bathrooms == 0 || property.price == 0) {
                 Snackbar
                     .make(it,R.string.enter_fields, Snackbar.LENGTH_LONG)
                     .show()
@@ -68,15 +80,14 @@ class PropertyActivity : AppCompatActivity() {
                 else {
                     app.properties.create(property.copy())
                 }
+                setResult(RESULT_OK)
+                finish()
             }
-            i("add Button Pressed: $property")
-            setResult(RESULT_OK)
-            finish()
         }
         binding.chooseImage.setOnClickListener {
             showImagePicker(imageIntentLauncher)
         }
-        registerImagePickerCallback()
+
 
         binding.propertyLocation.setOnClickListener {
             i ("Set Location Pressed")
@@ -91,6 +102,7 @@ class PropertyActivity : AppCompatActivity() {
             mapIntentLauncher.launch(launcherIntent)
         }
         registerMapCallback()
+        registerImagePickerCallback()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -112,6 +124,52 @@ class PropertyActivity : AppCompatActivity() {
     }
 
 
+    private fun setupNumberPickers() {
+        //Similar to edit mode,
+        // If the number of bedrooms or bathrooms is 0 the associated number picker will show as 0.
+        // Otherwise the number pickers will show the previous value they were assigned.
+        if (property.bedrooms == 0){
+            var numbBeds = binding.propertyBedrooms
+            numbBeds.minValue = 0
+            numbBeds.maxValue = 10
+            numbBeds.wrapSelectorWheel = true
+        }
+        else{
+            binding.propertyBedrooms.value = property.bedrooms
+            var numbBeds = binding.propertyBedrooms
+            numbBeds.minValue = 0
+            numbBeds.maxValue = 10
+            numbBeds.wrapSelectorWheel = true
+            property.bedrooms = binding.propertyBedrooms.value
+        }
+        if (property.bathrooms == 0){
+            var numbBaths = binding.propertyBathrooms
+            numbBaths.minValue = 0
+            numbBaths.maxValue = 10
+            numbBaths.wrapSelectorWheel = true
+        }
+        else{
+            binding.propertyBathrooms.value = property.bathrooms
+            var numbBaths = binding.propertyBathrooms
+            numbBaths.minValue = 0
+            numbBaths.maxValue = 10
+            numbBaths.wrapSelectorWheel = true
+            property.bathrooms = binding.propertyBathrooms.value
+        }
+        if (property.price == 0){
+            var price = binding.propertyPrice
+            price.minValue = 0
+            price.maxValue = 30_000_000
+        }
+        else{
+            binding.propertyBathrooms.value = property.price
+            var numbBaths = binding.propertyPrice
+            numbBaths.minValue = 0
+            numbBaths.maxValue = 30_000_000
+//            numbBaths.wrapSelectorWheel = true
+            property.bathrooms = binding.propertyPrice.value
+        }
+    }
 
 
     private fun registerImagePickerCallback() {

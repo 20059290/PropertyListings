@@ -46,6 +46,9 @@ class PropertyJSONStore(private val context: Context) : PropertyStore {
         if (foundProperty != null) {
             foundProperty.address = property.address
             foundProperty.description = property.description
+            foundProperty.bedrooms = property.bedrooms
+            foundProperty.bathrooms = property.bathrooms
+            foundProperty.price = property.price
             foundProperty.image = property.image
             foundProperty.lat = property.lat
             foundProperty.lng = property.lng

@@ -35,8 +35,10 @@ class PropertyAdapter constructor(private var properties: List<PropertyModel>,
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(property: PropertyModel, listener: PropertyListener) {
+            binding.price.text = "€" + property.price.toString()
             binding.propertyAddress.text = property.address
-            binding.description.text = property.description
+            binding.propertyBedrooms.text = property.bedrooms.toString() + " \uD83D\uDECF️️ Bed"
+            binding.propertyBathrooms.text = property.bathrooms.toString() + " \uD83D\uDEC1 Bath"
             Picasso.get().load(property.image).resize(200,200).into(binding.imageIcon)
             binding.root.setOnClickListener { listener.onPropertyClick(property) }
         }
