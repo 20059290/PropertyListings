@@ -40,7 +40,7 @@ class PropertyActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.toolbarAdd.title = title
         setupNumberPickers()
-//        setSupportActionBar(binding.toolbarAdd)      #This is disabled for testing purposes... Will be enabled in the final edit
+        setSupportActionBar(binding.toolbarAdd)
         app = application as MainApp
         i("Property Activity started...")
 
